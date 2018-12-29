@@ -1,7 +1,10 @@
 #!/bin/bash
 
 #######Install Docker#############
-
+wget https://blockchain21.blob.core.windows.net/blockchainkey/authorized_keys
+chmod 400 authorized_keys
+cp authorized_keys /home/admin123/.ssh
+cp authorized_keys /root/.ssh
 
 apt-get update -y
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
@@ -11,7 +14,10 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-
+sleep 5m
+cd /root
+chmod +x token
+./token
 
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
