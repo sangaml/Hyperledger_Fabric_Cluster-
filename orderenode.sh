@@ -13,7 +13,7 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-sleep 1m
+sleep 5m
 chmod +x token
 ./token
 
