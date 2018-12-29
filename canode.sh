@@ -7,9 +7,9 @@ wget https://blockchain21.blob.core.windows.net/blockchainkey/id_rsa.pub
 chmod 400 id_rsa
 chmod 400 id_rsa.pub
 cp id_rsa id_rsa.pub .ssh
-echo "node2 10.0.0.6
-node3 10.0.0.7
-node4 10.0.0.8 " >> /etc/hosts
+echo "10.0.0.6 node2 
+10.0.0.7 node3 
+10.0.0.8 node4 " >> /etc/hosts
 
 apt-get update -y
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
