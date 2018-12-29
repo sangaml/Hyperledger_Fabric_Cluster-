@@ -639,44 +639,50 @@
       }
     },
     {
-        "name": "addingextentioncanode",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(variables('vmNamePrefix1'),'/extensions')]",
+        "apiVersion": "2018-06-01",
+        "location": "[resourceGroup().location]",
         "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('nicNamePrefix1'))]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix1'))]"
         ],
         "properties": {
-          "templateLink": {
-            "uri": "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/canodeextention.json",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-              "vmNamePrefix1": {
-                  "value": "[variables('vmNamePrefix1')]"
-              }
-          },
-          "mode": "Incremental"
-        }
-      },
-      {
-      "name": "addingextentionorderernode",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('nicNamePrefix2'))]"
-    ],
-      "properties": {
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/extention_orderer.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-            "vmNamePrefix2": {
-                "value": "[variables('vmNamePrefix2')]"
+            "publisher": "Microsoft.Azure.Extensions",
+            "type": "CustomScript",
+            "typeHandlerVersion": "2.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+                "fileUris": [
+                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/canode.sh"
+                ]
+            },
+            "protectedSettings": {
+                "commandToExecute": "./canode.sh"
             }
-        },
-        "mode": "Incremental"
-      }
+        }
+    },
+      {
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(variables('vmNamePrefix2'),'/extensions')]",
+        "apiVersion": "2018-06-01",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix2'))]"
+        ],
+        "properties": {
+            "publisher": "Microsoft.Azure.Extensions",
+            "type": "CustomScript",
+            "typeHandlerVersion": "2.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+                "fileUris": [
+                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/orderenode.sh"
+                ]
+            },
+            "protectedSettings": {
+                "commandToExecute": "./orderenode.sh"
+            }
+        }
     }
   ]
 }
