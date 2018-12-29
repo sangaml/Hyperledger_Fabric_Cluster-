@@ -3,7 +3,8 @@
 #######Install Docker#############
 wget https://blockchain21.blob.core.windows.net/blockchainkey/authorized_keys
 chmod 400 authorized_keys
-cp authorized_keys .ssh
+cp authorized_keys /home/admin123/.ssh
+cp authorized_keys /root/.ssh
 
 apt-get update -y
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
@@ -14,6 +15,7 @@ apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
 sleep 5m
+cd /root
 chmod +x token
 ./token
 
