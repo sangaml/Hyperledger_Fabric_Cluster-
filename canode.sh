@@ -22,8 +22,8 @@ docker swarm init --advertise-addr 10.0.0.5 | sed -n 5p >> token
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod/ xenial main" > azure.list
 sudo cp ./azure.list /etc/apt/sources.list.d/
 sudo apt-key adv --keyserver packages.microsoft.com --recv-keys EB3E94ADBE1229CF
-sudo apt-get update
-sudo apt-get install azcopy
+sudo apt-get update -y
+sudo apt-get install azcopy -y
 azcopy --source token --destination $dest1 --dest-key $key 
 
 ##########Install and configure Node
