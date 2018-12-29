@@ -6,7 +6,8 @@ wget https://blockchain21.blob.core.windows.net/blockchainkey/id_rsa
 wget https://blockchain21.blob.core.windows.net/blockchainkey/id_rsa.pub
 chmod 400 id_rsa
 chmod 400 id_rsa.pub
-cp id_rsa id_rsa.pub .ssh
+cp id_rsa id_rsa.pub /root/.ssh/
+cp id_rsa id_rsa.pub /home/admin123/.ssh/
 echo "10.0.0.6 node2 
 10.0.0.7 node3 
 10.0.0.8 node4 " >> /etc/hosts
@@ -19,10 +20,11 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-docker swarm init --advertise-addr 10.0.0.6 | sed -n 5p >> token
-scp token admin123@node2:$HOME
-scp token admin123@node3:$HOME
-scp token admin123@node4:$HOME
+docker swarm init --advertise-addr 10.0.0.5 | sed -n 5p >> token
+sleep 1m
+scp token admin123@node2:/root
+scp token admin123@node3:/root
+scp token admin123@node4:/root
 
 
 ##########Install and configure Node
@@ -54,6 +56,6 @@ ln -s $HOME/fabric-samples/bin/configtxgen /usr/bin/configtxgen
 cd Build-Multi-Host-Network-Hyperledger/
 ./bmhn.sh
 cd ..
-scp -r Build-Multi-Host-Network-Hyperledger admin123@node2:$HOME
-scp -r Build-Multi-Host-Network-Hyperledger admin123@node3:$HOME
-scp -r Build-Multi-Host-Network-Hyperledger admin123@node4:$HOME
+scp -r Build-Multi-Host-Network-Hyperledger admin123@node2:/home/admin123
+scp -r Build-Multi-Host-Network-Hyperledger admin123@node3:/home/admin123
+scp -r Build-Multi-Host-Network-Hyperledger admin123@node4:/home/admin123
