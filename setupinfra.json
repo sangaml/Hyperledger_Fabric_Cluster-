@@ -637,6 +637,40 @@
           }
         }
       }
+    },
+    {
+        "name": "addingextentioncanode",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/canodeextention.json",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+              "vmNamePrefix1": {
+                  "value": "[variables('vmNamePrefix1')]"
+              }
+          },
+          "mode": "Incremental"
+        }
+      },
+      {
+      "name": "addingextentionorderernode",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/extention_orderer.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+            "vmNamePrefix2": {
+                "value": "[variables('vmNamePrefix2')]"
+            }
+        },
+        "mode": "Incremental"
+      }
     }
   ]
 }
