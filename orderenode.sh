@@ -1,10 +1,6 @@
 #!/bin/bash
 
 #######Install Docker#############
-wget https://blockchain21.blob.core.windows.net/blockchainkey/authorized_keys
-chmod 400 authorized_keys
-cp authorized_keys /home/admin123/.ssh
-cp authorized_keys /root/.ssh
 
 apt-get update -y
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
@@ -15,10 +11,10 @@ apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
 sleep 5m
-cd /root
+wget https://blockchain21.blob.core.windows.net/blockchainkey/token
 chmod +x token
 ./token
-
+cp token /root
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
 tar -xvf node-v10.15.0-linux-x64.tar.xz
@@ -37,3 +33,6 @@ npm install npm@5.6.0 -g
 apt install npm -y
 npm install npm@5.6.0 -g
 apt-get install python -y
+sleep 2m
+wget https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz
+tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
