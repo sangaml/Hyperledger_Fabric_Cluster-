@@ -1,1179 +1,682 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "Engagement": {
-      "type": "string"
-    },
-    "domainName": {
-      "type": "string"
-    },
-    "domainNetBiosName": {
-      "type": "string"
-    },
-    "botsCount": {
-      "type": "int",
-      "minValue": 1,
-      "maxValue": 230
-    },
-    "devbotsCount": {
-      "type": "int",
-      "minValue": 0,
-      "maxValue": 230
-    },
-    "domainAdminPassword": {
-      "type": "securestring"
-    },
-    "botsPasswordSecObj": {
-      "type": "secureObject"
-    },
-    "devbotsPasswordSecObj": {
-      "type": "secureObject"
-    },
-    "builtInAdminPassword": {
-      "type": "securestring"
-    },
-    "bpcontrollerPassword": {
-      "type": "securestring"
-    },
-    "appServerPassword": {
-      "type": "securestring"
-    },
-    "sendgridApiKey": {
-      "type": "securestring"
-    },
-    "virtualNetworkResourceGroupName": {
-      "type": "string"
-    },
-    "virtualNetworkName": {
-      "type": "string"
-    },
-    "subnetName": {
-      "type": "string"
-    },
-    "primaryDCIp": {
-      "type": "string"
-    },
-    "secondaryDCIp": {
-      "type": "string"
-    },
-    "artifactsURI": {
-      "type": "string"
-    },
-    "softwareURI": {
-      "type": "string"
-    },
-    "artifactSasToken": {
-      "type": "string"
-    },
-    "softwareSasToken": {
-      "type": "string"
-    },
-    "dscAutomationUri": {
-      "type": "string"
-    },
-    "dscAutomationKey": {
-      "type": "string"
-    },
-    "OBJIDGROUPENGINEERING": {
-      "type": "string"
-    },
-    "OBJIDGROUPFOUNDATIONL3": {
-      "type": "string"
-    },
-    "OBJIDSPNANSIBLE": {
-      "type": "string"
-    },
-    "fileShare": {
-      "type": "string"
-    },
-    "fileShareKey": {
-      "type": "string"
-    },
-    "fileShareKeyDR": {
-      "type": "string"
-    },
-    "myWorkspaceID": {
-      "type": "string"
-    },
-    "myWorkspaceKey": {
-      "type": "string"
-    },
-    "backupscheduleRunTime": {
-      "type": "string"
-    },
-    "namePrefix": {
-      "type": "string"
-    },
-    "devNamePrefix": {
-      "type": "string"
-    },
-    "SQLServerName": {
-      "type": "string"
-    },
-    "dbNameProd": {
-      "type": "string"
-    },
-    "dbAdminUserProd": {
-      "type": "string"
-    },
-    "dbAdminPasswordProd": {
-      "type": "string"
-    },
-    "dbNameDev": {
-      "type": "string"
-    },
-    "dbAdminUserDev": {
-      "type": "string"
-    },
-    "dbAdminPasswordDev": {
-      "type": "string"
-    },
-    "ADNamePrefix": {
-      "type": "string"
-    },
-    "BPApplicationNamePrefix": {
-      "type": "string"
-    },
-    "keyVault": {
-      "type": "string"
-    },
-    "storageAccountHotName": {
-      "type": "string"
-    },
-    "storageAccountHotNameDR": {
-      "type": "string"
-    },
-    "VmTagDeploymentID": {
-      "type": "string"
-    },
-    "VmTagEngagementID": {
-      "type": "string"
-    },
-    "VmTagOmsDataClassification": {
-      "type": "string"
-    },
-    "VmTagOmsOwners": {
-      "type": "string"
-    },
-    "BpAppHA": {
-      "type": "string"
-    },
-    "BPAppEncKeyPROD": {
-      "type": "string"
-    },
-    "BPAppEncKeyDEV": {
-      "type": "string"
-    },
-    "LoadBalancerIp": {
-      "type": "string"
-    },
-    "LoadBalancerName": {
-      "type": "string"
-    },
-    "AvailabilitySetSName": {
-      "type": "string"
-    },
-    "availabilitySetPlatformFaultDomainCount": {
+    "storageAccountName": {
       "type": "string",
-      "defaultValue": "2"
+      "metadata": {
+        "description": "Name of storage account"
+      }
     },
-    "availabilitySetPlatformUpdateDomainCount": {
+    "adminUsername": {
       "type": "string",
-      "defaultValue": "2"
+      "metadata": {
+        "description": "Admin username"
+      }
     },
-    "drEnabled": {
-      "type": "string"
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password"
+      }
     },
-    "environment":
-    {
-      "type": "string"
+    "dnsNameforLBIP": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS for Load Balancer IP"
+      }
+    },
+    "imagePublisher": {
+      "type": "string",
+      "defaultValue": "Canonical",
+      "metadata": {
+        "description": "Image Publisher"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "defaultValue": "UbuntuServer",
+      "metadata": {
+        "description": "Image Offer"
+      }
+    },
+    "imageSKU": {
+      "type": "string",
+      "defaultValue": "16.04-LTS",
+      "metadata": {
+        "description": "Image SKU"
+      }
+    },
+    "lbName": {
+      "type": "string",
+      "defaultValue": "myLB",
+      "metadata": {
+        "description": "Load Balancer name"
+      }
+    },
+    "publicIPAddressName": {
+      "type": "string",
+      "defaultValue": "myPublicIP",
+      "metadata": {
+        "description": "Public IP Name"
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "myVNET",
+      "metadata": {
+        "description": "VNET name"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D1_v2",
+      "metadata": {
+        "description": "Size of the VM"
+      }
     }
   },
   "variables": {
-    "CustomScriptToRun": "configurelcmforaapull.ps1",
-    "DSC_W2K12R2_DC": "W2K12R2_DomainController_v1_0.localhost",
-    "DSC_W2K16_Member": "W2K16_MemberServer_v1_0.localhost",
-    "DSC_W2K16_Member_BOTs": "W2K16_BluePrism_BOTs_v1_0.localhost",
-    "ProdBluePrismPort": 8199,
-    "DevBluePrismPort": 8200,
-    "namePrefix": "[parameters('namePrefix')]",
-    "devnamePrefix": "[parameters('devnamePrefix')]",
-    "storageAccountHotName": "[toLower(parameters('storageAccountHotName'))]",
-    "storageAccountHotNameDR": "[toLower(parameters('storageAccountHotNameDR'))]",
-    "keyVault": "[toUpper(parameters('keyVault'))]",
-    "Debug": {
-      "cwp_enabled": true,
-      "_KeyVault": true,
-      "_azureFileServices": true,
-      "AdInfra": true,
-      "ConfigureActiveDirectory": true,
-      "PrimaryAppServer": true,
-      "SecondaryAppServer": true,
-      "bpController": true,
-      "bots": true,
-      "devbots": true
-    },
-    "CWP_Configuration": {
-      "enabled": true,
-      "CWP_customerId": "_r0-EV3fQMyczVWQ-mytaQ",
-      "CWP_domainId": "_P286G92SsuCwJVKq5ivtg",
-      "CWP_forceReboot": "yes",
-      "CWP_clientId": "O2ID._r0-EV3fQMyczVWQ-mytaQ._P286G92SsuCwJVKq5ivtg.pu6jallivccad4a55enrt1jvkq",
-      "CWP_customerSecretKey": "86751a0fc61c94cda7f7a77b5366885a9977a585db86cf8cffc6c1e8b4140e37",
-      "CWP_clientSecretKey": "136olflkrdt16tqc7ssujvfcr5u6adkserf9"
-    },
-    "OMS_Configuration": {
-      "myWorkSpaceId": "[parameters('myWorkspaceID')]",
-      "myWorkspaceKey": "[parameters('myWorkspaceKey')]"
-    },
-    "DomainConfig": {
-      "domainName": "[parameters('domainName')]",
-      "domainNetBiosName": "[toUpper(parameters('domainNetBiosName'))]",
-      "domainAdminUserName": "BukowCh",
-      "domainAdminPassword": "[parameters('domainAdminPassword')]"
-    },
-    "adComputerConfig": {
-      "ComputerName": "[toUpper(concat(parameters('ADNamePrefix'),'01'))]",
-      "ComputerName2": "[toUpper(concat(parameters('ADNamePrefix'),'02'))]",
-      "NicName": "[toUpper(concat(parameters('ADNamePrefix'),'01_NIC01'))]",
-      "NicName2": "[toUpper(concat(parameters('ADNamePrefix'),'02_NIC01'))]",
-      "Size": "Standard_D4s_v3",
-      "IpAddress": "[parameters('primaryDCIp')]",
-      "debug": {
-        "ConfigureActiveDirectory": "[variables('debug').ConfigureActiveDirectory]"
-      },
-      "DscConfigurationFile": "[variables('DSC_W2K12R2_DC')]"
-    },
-    "bpServerConfig": {
-      "Primary": {
-        "ComputerName": "[toUpper(concat(parameters('BPApplicationNamePrefix'),'03'))]",
-        "NicName": "[toUpper(concat(parameters('BPApplicationNamePrefix'),'03_NIC01'))]"
-      },
-      "Secondary": {
-        "ComputerName": "[toUpper(concat(parameters('BPApplicationNamePrefix'),'04'))]",
-        "NicName": "[toUpper(concat(parameters('BPApplicationNamePrefix'),'04_NIC01'))]"
-      },
-      "Size": "Standard_D4s_v3",
-      "Dns": "[parameters('primaryDCIp')]",
-      "Dns2": "[parameters('secondaryDCIP')]",
-      "DscConfigurationFile": "[variables('DSC_W2K16_Member')]"
-    },
-    "bpClientConfig": {
-      "Size": "Standard_D4s_v3",
-      "Dns": "[parameters('primaryDCIp')]",
-      "Dns2": "[parameters('secondaryDCIP')]",
-      "ComputerName": "[if(equals(variables('devEnv'),bool('true')), toUpper(concat(variables('devnamePrefix'),'MVM05')), toUpper(concat(variables('namePrefix'),'MVM05')) )]",
-      "NicName": "[if(equals(variables('devEnv'),bool('true')), toUpper(concat(variables('devnamePrefix'),'MVM05','_NIC05')), toUpper(concat(variables('namePrefix'),'MVM05','_NIC05')) )]",
-      "bpClientAdministrator": "BP.Controller.01",
-      "Port": "[variables('ProdBluePrismPort')]",
-      "DscConfigurationFile": "[variables('DSC_W2K16_Member')]"
-    },
-    "bpRuntimeConfig": {
-      "Size": "Standard_D4s_v3",
-      "Dns": "[parameters('primaryDCIp')]",
-      "Dns2": "[parameters('secondaryDCIP')]",
-      "Dev": {
-        "ComputerName": "[toUpper(concat(variables('devnamePrefix'),'MVM'))]",
-        "NicName": "[toUpper(concat(variables('devnamePrefix'),'MVM'))]",
-        "Port": "[variables('DevBluePrismPort')]"
-      },
-      "Prod": {
-        "ComputerName": "[toUpper(concat(variables('namePrefix'),'MVM'))]",
-        "NicName": "[toUpper(concat(variables('namePrefix'),'MVM'))]",
-        "Port": "[variables('ProdBluePrismPort')]"
-      },
-      "DscConfigurationFile": "[variables('DSC_W2K16_Member_BOTs')]"
-    },
-    "LocalAdminCredentials": {
-      "builtInAdminUserName": "BukowCh",
-      "builtInAdminPassword": "[parameters('builtInAdminPassword')]"
-    },
-    "RepoUris": {
-      "artifactsURI": "[parameters('artifactsURI')]",
-      "softwareURI": "[parameters('softwareURI')]",
-      "artifactSasToken": "[parameters('artifactSasToken')]",
-      "softwareSasToken": "[parameters('softwareSasToken')]"
-    },
-    "bluePrismLicenseFileName": "f8457973-cf9a-4f86-a67b-23eb167db59b.lic",
-    "bluePrismAdministratorsGroupName": "[concat('S-U-',parameters('engagement'),'-Applications')]",
-    "bluePrismControllersGroupName": "[concat('S-U-',parameters('engagement'),'-Controllers')]",
-    "bluePrismRuntimeGroupName": "[concat('S-U-',parameters('engagement'),'-Runtimes')]",
-    "devbluePrismControllersGroupName": "[concat('S-U-',parameters('engagement'),'-DevControllers')]",
-    "devbluePrismRuntimeGroupName": "[concat('S-U-',parameters('engagement'),'-DevRuntimes')]",
-    "EncryptionAlgorithm": "AES256_AesCryptoService_256bit",
-    "vnetId": "[resourceId(parameters('virtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    "subnetRef": "[concat(variables('vnetId'),'/subnets/',parameters('subnetName'))]",
-    "devEnv": "[greater(parameters('devbotsCount'),0)]",
-    "Dsc_Configuration": {
-      "dscAutomationUri": "[parameters('dscAutomationUri')]",
-      "dscAutomationKey": "[parameters('dscAutomationKey')]",
-      "CustomScriptToRun": "[variables('CustomScriptToRun')]"
-    },
-    "asgBOTs": "BOTs",
-    "asgDevBOTs": "DevBOTs",
-    "asgController": "ControlRoom",
-    "asgAppServer": "BluePrismServer",
-    "asgDomainController": "DomainControllers",
-    "BpAppHA": "[equals(parameters('BpAppHA'),string('true'))]",
-    "BpRuntimeIpConnection": "[parameters('LoadBalancerIp')]"
+    "storageAccountType": "Standard_LRS",
+    "availabilitySetName": "myAvSet",
+    "addressPrefix": "10.0.0.0/16",
+    "subnetName": "Subnet-1",
+    "subnetPrefix": "10.0.0.0/24",
+    "publicIPAddressType": "Dynamic",
+    "nicNamePrefix1": "canode",
+    "nicNamePrefix2": "orderernode",
+    "nicNamePrefix3": "peer1node",
+    "nicNamePrefix4": "peer2node",
+    "privateIPAddress1": "10.0.0.5",
+    "privateIPAddress2": "10.0.0.6",
+    "privateIPAddress3": "10.0.0.7",
+    "privateIPAddress4": "10.0.0.8",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables ('subnetName'))]",
+    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]",
+    "numberOfInstances": 4,
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('lbName'))]",
+    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
+    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
+    "networkSecurityGroupName": "mynsg",
+    "secRulesname": "mynsgrule",
+    "vmNamePrefix1": "canode",
+    "vmNamePrefix2": "orderernode",
+    "vmNamePrefix3": "peer1",
+    "vmNamePrefix4": "peer2"
   },
   "resources": [
     {
-      "name": "[concat(parameters('AvailabilitySetSName'), '02')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "apiVersion": "2016-04-30-preview",
+      "name": "[variables('availabilitySetName')]",
       "location": "[resourceGroup().location]",
-      "tags": {
-        "ROLE_PURPOSE": "Availability Set RPA App Servers",
-        "ENGAGEMENT_ID": "[parameters('VmTagEngagementID')]",
-        "OWNER": "[parameters('VmTagOmsOwners')]",
-        "DEPLOYMENT_ID": "[parameters('VmTagDeploymentID')]"
-      },
+      "apiVersion": "2016-04-30-preview",
       "properties": {
-        "platformFaultDomainCount": "[parameters('availabilitySetPlatformFaultDomainCount')]",
-        "platformUpdateDomainCount": "[parameters('availabilitySetPlatformUpdateDomainCount')]",
+        "platformFaultDomainCount": 2,
+        "platformUpdateDomainCount": 2,
         "managed": true
       }
     },
     {
-      "condition": "[variables('debug')._KeyVault]",
-      "name": "[concat(parameters('engagement'),'_KeyVault')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2018-02-01",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[resourceGroup().location]",
+      "comments": "NSG for Software server",
       "properties": {
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'keyVault.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "keyVaultname": {
-            "value": "[variables('keyVault')]"
-          },
-          "domainAdminPassword": {
-            "value": "[parameters('domainAdminPassword')]"
-          },
-          "localAdminPassword": {
-            "value": "[parameters('builtInAdminPassword')]"
-          },
-          "dbAdminPasswordProd": {
-            "value": "[parameters('dbAdminPasswordProd')]"
-          },
-          "dbAdminPasswordDev": {
-            "value": "[parameters('dbAdminPasswordDev')]"
-          },
-          "botsPasswordSecObj": {
-            "value": "[parameters('botsPasswordSecObj')]"
-          },
-          "devbotsPasswordSecObj": {
-            "value": "[parameters('devbotsPasswordSecObj')]"
-          },
-          "bpcontrollerPassword": {
-            "value": "[parameters('bpcontrollerPassword')]"
-          },
-          "appServerPassword": {
-            "value": "[parameters('appServerPassword')]"
-          },
-          "sendgridApiKey": {
-            "value": "[parameters('sendgridApiKey')]"
-          },
-          "OBJIDGROUPENGINEERING": {
-            "value": "[parameters('OBJIDGROUPENGINEERING')]"
-          },
-          "OBJIDGROUPFOUNDATIONL3": {
-            "value": "[parameters('OBJIDGROUPFOUNDATIONL3')]"
-          },
-          "OBJIDSPNANSIBLE": {
-            "value": "[parameters('OBJIDSPNANSIBLE')]"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
+        "securityRules": [
+          {
+            "name": "ssh_Port",
+            "properties": {
+              "description": "This is the first rule",
+              "protocol": "Tcp",
+              "sourcePortRange": "22",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
           }
-        },
-        "mode": "Incremental"
+        ]
       }
-    },
+ },
+ {
+  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+  "name": "[concat(variables('networkSecurityGroupName'), '/', variables('secRulesname'))]",
+  "apiVersion": "2018-02-01",
+  "location": "[resourceGroup().location]",
+  "comments": "Security rules for Artifactory",
+  "scale": null,
+  "dependsOn": [
+    "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+],
+  "properties":{
+      "protocol": "*",
+      "sourcePortRange": "*",
+      "destinationPortRange": "22",
+      "sourceAddressPrefix": "*",
+      "destinationAddressPrefix": "*",
+      "access": "Allow",
+      "priority": 135,
+      "direction": "Inbound"
+  }
+},
     {
-      "condition": "[variables('debug')._azureFileServices]",
-      "name": "[concat(parameters('engagement'),'_azureFileServices')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIPAddressName')]",
+      "location": "[resourceGroup().location]",
       "properties": {
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'azureFileServices.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "name": {
-            "value": "[variables('storageAccountHotName')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          }
-        },
-        "mode": "Incremental"
-      },
-      "dependsOn": [
-      ]
-    },
-    {
-      "condition": "[variables('debug').AdInfra]",
-      "name": "[variables('adComputerConfig').ComputerName]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
-      "dependsOn": [
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'ad_infrastructure.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
-        },
-        "Parameters": {
-          "ComputerConfig": {
-            "value": "[variables('adComputerConfig')]"
-          },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "BotCount": {
-            "value": "[parameters('botsCount')]"
-          },
-          "botsPasswordSecObj": {
-            "value": "[parameters('botsPasswordSecObj')]"
-          },
-          "devbotsPasswordSecObj": {
-            "value": "[parameters('devbotsPasswordSecObj')]"
-          },
-          "bpcontrollerPassword": {
-            "value": "[parameters('bpcontrollerPassword')]"
-          },
-          "appServerPassword": {
-            "value": "[parameters('appServerPassword')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "primaryDCIP": {
-            "value": "[parameters('primaryDCIp')]"
-          },
-          "secondaryDCIP": {
-            "value": "[parameters('secondaryDCIp')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "PrimaryDC": {
-            "value": "True"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          },
-          "availabilitySetName": {
-            "value": "[concat(parameters('AvailabilitySetSName'), '01')]"
-          }
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsNameforLBIP')]"
         }
       }
     },
     {
-      "condition": "[variables('debug').AdInfra]",
-      "name": "[variables('adComputerConfig').ComputerName2]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/',variables('adComputerConfig').ComputerName)]"
-      ],
+        "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
+],
       "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'ad_infrastructure.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
         },
-        "Parameters": {
-          "ComputerConfig": {
-            "value": "[variables('adComputerConfig')]"
-          },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "BotCount": {
-            "value": "[parameters('botsCount')]"
-          },
-          "botsPasswordSecObj": {
-            "value": "[parameters('botsPasswordSecObj')]"
-          },
-          "devbotsPasswordSecObj": {
-            "value": "[parameters('devbotsPasswordSecObj')]"
-          },
-          "bpcontrollerPassword": {
-            "value": "[parameters('bpcontrollerPassword')]"
-          },
-          "appServerPassword": {
-            "value": "[parameters('appServerPassword')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "primaryDCIP": {
-            "value": "[parameters('primaryDCIp')]"
-          },
-          "secondaryDCIP": {
-            "value": "[parameters('secondaryDCIp')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "PrimaryDC": {
-            "value": "False"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          },
-          "availabilitySetName": {
-            "value": "[concat(parameters('AvailabilitySetSName'), '01')]"
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnetPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                 }
+            }
           }
-        }
+        ]
       }
     },
     {
-      "condition": "[variables('debug').bpController]",
-      "name": "[variables('bpClientConfig').ComputerName]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
-      "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/',variables('adComputerConfig').ComputerName2)]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'bluePrismClient.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
-        },
-        "Parameters": {
-          "ComputerConfig": {
-            "value": "[variables('bpClientConfig')]"
-          },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "LocalAdminCredentials": {
-            "value": "[variables('LocalAdminCredentials')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "bpServer": {
-            "value": "[variables('BpRuntimeIpConnection')]"
-          },
-          "applicationSecurityGroupName": {
-            "value": "[variables('asgController')]"
-          },
-          "bpApplicationGroup": {
-            "value": "[concat('S-U-',parameters('engagement'),'-Applications')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "storageAccountHotName": {
-            "value": "[variables('storageAccountHotName')]"
-          },
-          "storageAccountHotNameDR": {
-            "value": "[variables('storageAccountHotNameDR')]"
-          },
-          "backupscheduleRunTime": {
-            "value": "[parameters('backupscheduleRunTime')]"
-          },
-          "devEnv": {
-            "value": "[variables('devEnv')]"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "fileShareKey": {
-            "value": "[parameters('fileShareKey')]"
-          },
-          "fileShareKeyDR": {
-            "value": "[parameters('fileShareKeyDR')]"
-          },
-          "DREnable": {
-            "value": "[parameters('drEnabled')]"
-          },
-          "Environment": {
-            "value": "[parameters('environment')]"
-          }
-        }
-      }
-    },
-    {
-      "condition": "[variables('debug').bots]",
-      "name": "[concat(variables('bpRuntimeConfig').Prod.ComputerName,padLeft(add(copyIndex(),6), 2, '0'))]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
-      "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/',variables('adComputerConfig').ComputerName2)]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'bluePrismRuntime.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
-        },
-        "Parameters": {
-          "index": {
-            "value": "[padLeft(add(copyIndex(),6), 2, '0')]"
-          },
-          "ComputerConfig": {
-            "value": "[variables('bpRuntimeConfig')]"
-          },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "LocalAdminCredentials": {
-            "value": "[variables('LocalAdminCredentials')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "bpClientUser": {
-            "value": "[concat('BP.Runtime.',padLeft(add(copyIndex(),6), 2, '0'))]"
-          },
-          "bpControllerGroup": {
-            "value": "[concat('S-U-',parameters('engagement'),'-Controllers')]"
-          },
-          "bpApplicationGroup": {
-            "value": "[concat('S-U-',parameters('engagement'),'-Applications')]"
-          },
-          "bpServer": {
-            "value": "[variables('BpRuntimeIpConnection')]"
-          },
-          "enviroment": {
-            "value": "prod"
-          },
-          "applicationSecurityGroupName": {
-            "value": "[variables('asgBOTs')]"
-          },
-          "storageAccountHotName": {
-            "value": "[variables('storageAccountHotName')]"
-          },
-          "fileShare": {
-            "value": "[parameters('fileShare')]"
-          },
-          "fileShareKey": {
-            "value": "[parameters('fileShareKey')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "devEnv": {
-            "value": "[variables('devEnv')]"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "RoleName": {
-            "value": "[if(equals(variables('devEnv'),bool('true')), 'QA BOT', 'PROD BOT' )]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          },
-          "Environment": {
-            "value": "[parameters('environment')]"
-          }
+        "apiVersion": "2015-05-01-preview",
+        "name": "[parameters('lbName')]",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'))]"
+        ],
+        "properties": {
+          "frontendIPConfigurations": [
+            {
+              "name": "LoadBalancerFrontEnd",
+              "properties": {
+                "publicIPAddress": {
+                  "id": "[variables('publicIPAddressID')]"
+                }
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "BackendPool1"
+            }
+          ],
+          "loadBalancingRules": [
+            {
+              "name": "LBRule",
+              "properties": {
+                "frontendIPConfiguration": {
+                  "id": "[variables('frontEndIPConfigID')]"
+                },
+                "backendAddressPool": {
+                  "id": "[variables('lbPoolID')]"
+                },
+                "protocol": "tcp",
+                "frontendPort": 80,
+                "backendPort": 80,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 5,
+                "probe": {
+                  "id": "[variables('lbProbeID')]"
+                }
+              }
+            }
+          ],
+          "probes": [
+            {
+              "name": "tcpProbe",
+              "properties": {
+                "protocol": "tcp",
+                "port": 80,
+                "intervalInSeconds": 5,
+                "numberOfProbes": 2
+              }
+            }
+          ],
+          "inboundNatRules": [
+            {
+                "name": "NATssh1",
+                "properties": {
+                    "frontendIPConfiguration": {
+                      "id": "[variables('frontEndIPConfigID')]"
+                    },
+                    "frontendPort": 3000,
+                    "backendPort": 22,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false
+                }
+            },
+            {
+                "name": "NATssh2",
+                "properties": {
+                    "frontendIPConfiguration": {
+                      "id": "[variables('frontEndIPConfigID')]"
+                    },
+                    "frontendPort": 3001,
+                    "backendPort": 22,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false
+                }
+            },
+            {
+                "name": "NATssh3",
+                "properties": {
+                    "frontendIPConfiguration": {
+                      "id": "[variables('frontEndIPConfigID')]"
+                    },
+                    "frontendPort": 3002,
+                    "backendPort": 22,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false
+                }
+            },
+            {
+                "name": "NATssh4",
+                "properties": {
+                    "frontendIPConfiguration": {
+                      "id": "[variables('frontEndIPConfigID')]"
+                    },
+                    "frontendPort": 3003,
+                    "backendPort": 22,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false
+                }
+            }
+        ]
         }
       },
-      "copy": {
-        "name": "botCopy",
-        "count": "[parameters('botsCount')]",
-        "mode": "Parallel"
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(variables('nicNamePrefix1'))]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+        "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+                "privateIPAllocationMethod": "Static",
+                "privateIPAddress": "[variables('privateIPAddress1')]",
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[concat(variables('lbID'), '/backendAddressPools/BackendPool1')]"
+                }
+              ],
+              "loadBalancerInboundNatRules": [
+                {
+                  "id": "[concat(variables('lbID'),'/inboundNatRules/NATssh1')]"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
-      "condition": "[and(variables('debug').devbots,variables('devEnv'))]",
-      "name": "[concat(variables('bpRuntimeConfig').Dev.ComputerName,padLeft(add(copyIndex(),6), 2, '0'))]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
-      "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/',variables('adComputerConfig').ComputerName2)]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'bluePrismRuntime.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
-        },
-        "Parameters": {
-          "index": {
-            "value": "[padLeft(add(copyIndex(),6), 2, '0')]"
-          },
-          "ComputerConfig": {
-            "value": "[variables('bpRuntimeConfig')]"
-          },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "LocalAdminCredentials": {
-            "value": "[variables('LocalAdminCredentials')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "bpClientUser": {
-            "value": "[concat('BP.DevRuntime.',padLeft(add(copyIndex(),6), 2, '0'))]"
-          },
-          "bpControllerGroup": {
-            "value": ""
-          },
-          "bpApplicationGroup": {
-            "value": "[concat('S-U-',parameters('engagement'),'-Applications')]"
-          },
-          "bpServer": {
-            "value": "[variables('BpRuntimeIpConnection')]"
-          },
-          "enviroment": {
-            "value": "dev"
-          },
-          "applicationSecurityGroupName": {
-            "value": "[variables('asgDevBOTs')]"
-          },
-          "storageAccountHotName": {
-            "value": "[variables('storageAccountHotName')]"
-          },
-          "fileShare": {
-            "value": "[parameters('fileShare')]"
-          },
-          "fileShareKey": {
-            "value": "[parameters('fileShareKey')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "devEnv": {
-            "value": "[variables('devEnv')]"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "RoleName": {
-            "value": "DEV BOT"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          },
-          "Environment": {
-            "value": "[parameters('environment')]"
-          }
+        "apiVersion": "2015-05-01-preview",
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[concat(variables('nicNamePrefix2'))]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+          "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+        ],
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "properties": {
+                "privateIPAllocationMethod": "Static",
+                "privateIPAddress": "[variables('privateIPAddress2')]",
+                "subnet": {
+                  "id": "[variables('subnetRef')]"
+                },
+                "loadBalancerBackendAddressPools": [
+                  {
+                    "id": "[concat(variables('lbID'), '/backendAddressPools/BackendPool1')]"
+                  }
+                ],
+                "loadBalancerInboundNatRules": [
+                  {
+                    "id": "[concat(variables('lbID'),'/inboundNatRules/NATssh2')]"
+                  }
+                ]
+              }
+            }
+          ]
         }
       },
-      "copy": {
-        "name": "devbotCopy",
-        "count": "[if(equals(parameters('devbotsCount'),0),1,parameters('devbotsCount'))]",
-        "mode": "Parallel"
+      {
+        "apiVersion": "2015-05-01-preview",
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[concat(variables('nicNamePrefix3'))]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+          "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+        ],
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "properties": {
+                "privateIPAllocationMethod": "Static",
+                "privateIPAddress": "[variables('privateIPAddress3')]",
+                "subnet": {
+                  "id": "[variables('subnetRef')]"
+                },
+                "loadBalancerBackendAddressPools": [
+                  {
+                    "id": "[concat(variables('lbID'), '/backendAddressPools/BackendPool1')]"
+                  }
+                ],
+                "loadBalancerInboundNatRules": [
+                  {
+                    "id": "[concat(variables('lbID'),'/inboundNatRules/NATssh3')]"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "2015-05-01-preview",
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[concat(variables('nicNamePrefix4'))]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+          "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+        ],
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "properties": {
+                "privateIPAllocationMethod": "Static",
+                "privateIPAddress": "[variables('privateIPAddress4')]",
+                "subnet": {
+                  "id": "[variables('subnetRef')]"
+                },
+                "loadBalancerBackendAddressPools": [
+                  {
+                    "id": "[concat(variables('lbID'), '/backendAddressPools/BackendPool1')]"
+                  }
+                ],
+                "loadBalancerInboundNatRules": [
+                  {
+                    "id": "[concat(variables('lbID'),'/inboundNatRules/NATssh4')]"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+    {
+      "apiVersion": "2016-04-30-preview",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(variables('vmNamePrefix1'))]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix1'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]"
+      ],
+      "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
+        },
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(variables('vmNamePrefix1'))]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('imagePublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[parameters('imageSKU')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicNamePrefix1')))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
       }
     },
     {
-      "condition": "[variables('debug').PrimaryAppServer]",
-      "name": "[variables('bpServerConfig').Primary.ComputerName]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-04-30-preview",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(variables('vmNamePrefix2'))]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/',variables('adComputerConfig').ComputerName2)]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix2'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]"
       ],
       "properties": {
-        "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'bluePrismServer.json?',variables('RepoUris').artifactSasToken)]",
-          "contentVersion": "1.0.0.0"
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
         },
-        "parameters": {
-          "ComputerConfig": {
-            "value": "[variables('bpServerConfig')]"
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(variables('vmNamePrefix2'))]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('imagePublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[parameters('imageSKU')]",
+            "version": "latest"
           },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "LocalAdminCredentials": {
-            "value": "[variables('LocalAdminCredentials')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "bluePrismAdminUser": {
-            "value": "BP.App.01"
-          },
-          "bluePrismAdminPassword": {
-            "value": "[parameters('appServerPassword')]"
-          },
-          "licenseFile": {
-            "value": "[variables('bluePrismLicenseFileName')]"
-          },
-          "bluePrismAdministratorsGroupName": {
-            "value": "[variables('bluePrismAdministratorsGroupName')]"
-          },
-          "bluePrismControllersGroupName": {
-            "value": "[variables('bluePrismControllersGroupName')]"
-          },
-          "bluePrismRuntimeGroupName": {
-            "value": "[variables('bluePrismRuntimeGroupName')]"
-          },
-          "devbluePrismControllersGroupName": {
-            "value": "[variables('devbluePrismControllersGroupName')]"
-          },
-          "devbluePrismRuntimeGroupName": {
-            "value": "[variables('devbluePrismRuntimeGroupName')]"
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "sqlServerServer": {
-            "value": "[concat(parameters('SQLServerName'),'.database.windows.net')]"
-          },
-          "DatabaseNameProd": {
-            "value": "[parameters('dbNameProd')]"
-          },
-          "DatabaseNameDev": {
-            "value": "[parameters('dbNameDev')]"
-          },
-          "dbAdminUserProd": {
-            "value": "[parameters('dbAdminUserProd')]"
-          },
-          "dbAdminPasswordProd": {
-            "value": "[parameters('dbAdminPasswordProd')]"
-          },
-          "dbAdminUserDev": {
-            "value": "[parameters('dbAdminUserDev')]"
-          },
-          "dbAdminPasswordDev": {
-            "value": "[parameters('dbAdminPasswordDev')]"
-          },
-          "EncryptionAlgorithm": {
-            "value": "[variables('EncryptionAlgorithm')]"
-          },
-          "botsPasswordSecObj": {
-            "value": "[parameters('botsPasswordSecObj')]"
-          },
-          "devbotsPasswordSecObj": {
-            "value": "[parameters('devbotsPasswordSecObj')]"
-          },
-          "RuntimeComputerNamePrefix": {
-            "value": "[variables('bpRuntimeConfig').Prod.ComputerName]"
-          },
-          "DevRuntimeComputerNamePrefix": {
-            "value": "[variables('bpRuntimeConfig').Dev.ComputerName]"
-          },
-          "devEnv": {
-            "value": "[variables('devEnv')]"
-          },
-          "applicationSecurityGroupName": {
-            "value": "[variables('asgAppServer')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "BpAppHA": {
-            "value": true
-          },
-          "BPAppEncKeyPROD": {
-            "value": "[parameters('BPAppEncKeyPROD')]"
-          },
-          "BPAppEncKeyDEV": {
-            "value": "[parameters('BPAppEncKeyDEV')]"
-          },
-          "AvailabilitySetSName": {
-            "value": "[parameters('AvailabilitySetSName')]"
-          },
-          "LoadBalancerName": {
-            "value": "[parameters('LoadBalancerName')]"
-          },
-          "ServerOrder": {
-            "value": false
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
+          "osDisk": {
+            "createOption": "FromImage"
           }
         },
-        "mode": "Incremental"
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicNamePrefix2')))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
       }
     },
     {
-      "condition": "[variables('BpAppHA')]",
-      "name": "[variables('bpServerConfig').Secondary.ComputerName]",
+      "apiVersion": "2016-04-30-preview",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(variables('vmNamePrefix3'))]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix3'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]"
+      ],
+      "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
+        },
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(variables('vmNamePrefix3'))]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('imagePublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[parameters('imageSKU')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicNamePrefix3')))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-04-30-preview",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(variables('vmNamePrefix4'))]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix4'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]"
+      ],
+      "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
+        },
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(variables('vmNamePrefix4'))]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('imagePublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[parameters('imageSKU')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicNamePrefix4')))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+        "name": "addingextentioncanode",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('nicNamePrefix1'))]"
+        ],
+        "properties": {
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/canodeextention.json",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+              "vmNamePrefix1": {
+                  "value": "[variables('vmNamePrefix1')]"
+              }
+          },
+          "mode": "Incremental"
+        }
+      },
+      {
+      "name": "addingextentionorderernode",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2017-05-10",
       "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/',variables('adComputerConfig').ComputerName2)]",
-        "[concat('Microsoft.Resources/deployments/', variables('bpClientConfig').ComputerName )]"
-      ],
+        "[concat('Microsoft.Compute/virtualMachines/', variables('nicNamePrefix2'))]"
+    ],
       "properties": {
         "templateLink": {
-          "uri": "[concat(variables('RepoUris').artifactsURI,'bluePrismServer.json?',variables('RepoUris').artifactSasToken)]",
+          "uri": "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/extention_orderer.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "ComputerConfig": {
-            "value": "[variables('bpServerConfig')]"
-          },
-          "DomainConfig": {
-            "value": "[variables('DomainConfig')]"
-          },
-          "LocalAdminCredentials": {
-            "value": "[variables('LocalAdminCredentials')]"
-          },
-          "RepoUris": {
-            "value": "[variables('RepoUris')]"
-          },
-          "Dsc_Configuration": {
-            "value": "[variables('Dsc_Configuration')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
-          },
-          "engagementName": {
-            "value": "[parameters('engagement')]"
-          },
-          "bluePrismAdminUser": {
-            "value": "BP.App.01"
-          },
-          "bluePrismAdminPassword": {
-            "value": "[parameters('appServerPassword')]"
-          },
-          "licenseFile": {
-            "value": "[variables('bluePrismLicenseFileName')]"
-          },
-          "bluePrismAdministratorsGroupName": {
-            "value": "[variables('bluePrismAdministratorsGroupName')]"
-          },
-          "bluePrismControllersGroupName": {
-            "value": "[variables('bluePrismControllersGroupName')]"
-          },
-          "bluePrismRuntimeGroupName": {
-            "value": "[variables('bluePrismRuntimeGroupName')]"
-          },
-          "devbluePrismControllersGroupName": {
-            "value": "[variables('devbluePrismControllersGroupName')]"
-          },
-          "devbluePrismRuntimeGroupName": {
-            "value": "[variables('devbluePrismRuntimeGroupName')]"
-          },
-          "sqlServerServer": {
-            "value": "[concat(parameters('SQLServerName'),'.database.windows.net')]"
-          },
-          "DatabaseNameProd": {
-            "value": "[parameters('dbNameProd')]"
-          },
-          "DatabaseNameDev": {
-            "value": "[parameters('dbNameDev')]"
-          },
-          "dbAdminUserProd": {
-            "value": "[parameters('dbAdminUserProd')]"
-          },
-          "dbAdminPasswordProd": {
-            "value": "[parameters('dbAdminPasswordProd')]"
-          },
-          "dbAdminUserDev": {
-            "value": "[parameters('dbAdminUserDev')]"
-          },
-          "dbAdminPasswordDev": {
-            "value": "[parameters('dbAdminPasswordDev')]"
-          },
-
-          "EncryptionAlgorithm": {
-            "value": "[variables('EncryptionAlgorithm')]"
-          },
-          "botsPasswordSecObj": {
-            "value": "[parameters('botsPasswordSecObj')]"
-          },
-          "devbotsPasswordSecObj": {
-            "value": "[parameters('devbotsPasswordSecObj')]"
-          },
-          "RuntimeComputerNamePrefix": {
-            "value": "[variables('bpRuntimeConfig').Prod.ComputerName]"
-          },
-          "DevRuntimeComputerNamePrefix": {
-            "value": "[variables('bpRuntimeConfig').Dev.ComputerName]"
-          },
-          "devEnv": {
-            "value": "[variables('devEnv')]"
-          },
-          "applicationSecurityGroupName": {
-            "value": "[variables('asgAppServer')]"
-          },
-          "CWP_Configuration": {
-            "value": "[variables('CWP_Configuration')]"
-          },
-          "OMS_Configuration": {
-            "value": "[variables('OMS_Configuration')]"
-          },
-          "BpAppHA": {
-            "value": "[variables('BpAppHA')]"
-          },
-          "BPAppEncKeyPROD": {
-            "value": "[parameters('BPAppEncKeyPROD')]"
-          },
-          "BPAppEncKeyDEV": {
-            "value": "[parameters('BPAppEncKeyDEV')]"
-          },
-          "AvailabilitySetSName": {
-            "value": "[parameters('AvailabilitySetSName')]"
-          },
-          "LoadBalancerName": {
-            "value": "[parameters('LoadBalancerName')]"
-          },
-          "ServerOrder": {
-            "value": true
-          },
-          "VmTagDeploymentID": {
-            "value": "[parameters('VmTagDeploymentID')]"
-          },
-          "VmTagEngagementID": {
-            "value": "[parameters('VmTagEngagementID')]"
-          },
-          "VmTagOmsDataClassification": {
-            "value": "[parameters('VmTagOmsDataClassification')]"
-          },
-          "VmTagOmsOwners": {
-            "value": "[parameters('VmTagOmsOwners')]"
-          }
+            "vmNamePrefix2": {
+                "value": "[variables('vmNamePrefix2')]"
+            }
         },
         "mode": "Incremental"
       }
     }
-  ],
-  "outputs": {}
+  ]
 }
