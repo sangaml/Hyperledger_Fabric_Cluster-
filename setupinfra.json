@@ -683,6 +683,51 @@
                 "commandToExecute": "./orderenode.sh"
             }
         }
+    },
+    {
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(variables('vmNamePrefix3'),'/extensions')]",
+        "apiVersion": "2018-06-01",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix3'))]"
+        ],
+        "properties": {
+            "publisher": "Microsoft.Azure.Extensions",
+            "type": "CustomScript",
+            "typeHandlerVersion": "2.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+                "fileUris": [
+                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/peernode.sh"
+                ]
+            },
+            "protectedSettings": {
+                "commandToExecute": "./peernode.sh"
+            }
+        }
+    },{
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(variables('vmNamePrefix4'),'/extensions')]",
+        "apiVersion": "2018-06-01",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix4'))]"
+        ],
+        "properties": {
+            "publisher": "Microsoft.Azure.Extensions",
+            "type": "CustomScript",
+            "typeHandlerVersion": "2.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+                "fileUris": [
+                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/peernode.sh"
+                ]
+            },
+            "protectedSettings": {
+                "commandToExecute": "./peernode.sh"
+            }
+        }
     }
   ]
 }
