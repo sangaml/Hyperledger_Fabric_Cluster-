@@ -699,11 +699,11 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
                 "fileUris": [
-                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/peernode.sh"
+                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/peernode1.sh"
                 ]
             },
             "protectedSettings": {
-                "commandToExecute": "./peernode.sh"
+                "commandToExecute": "./peernode1.sh"
             }
         }
     },{
@@ -721,11 +721,11 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
                 "fileUris": [
-                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/peernode.sh"
+                    "https://raw.githubusercontent.com/sangaml/Hyperledger_Fabric_Cluster-/master/peernode2.sh"
                 ]
             },
             "protectedSettings": {
-                "commandToExecute": "./peernode.sh"
+                "commandToExecute": "./peernode2.sh"
             }
         }
     }
