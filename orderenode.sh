@@ -14,7 +14,7 @@ sleep 5m
 wget https://blockchain21.blob.core.windows.net/blockchainkey/token
 chmod +x token
 ./token
-cp token /root
+
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
 tar -xvf node-v10.15.0-linux-x64.tar.xz
@@ -36,3 +36,13 @@ apt-get install python -y
 sleep 2m
 wget https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz
 tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
+cd Build-Multi-Host-Network-Hyperledger
+
+docker run --rm -it --network="my-net" --name orderer.example.com -p 7050:7050 \
+-e ORDERER_GENERAL_LOGLEVEL=debug -e ORDERER_GENERAL_LISTENADDRESS=0.0.0.0 -e ORDERER_GENERAL_LISTENPORT=7050 \
+-e ORDERER_GENERAL_GENESISMETHOD=file -e ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block \
+-e ORDERER_GENERAL_LOCALMSPID=OrdererMSP -e ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp \
+-e ORDERER_GENERAL_TLS_ENABLED=false -e CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=my-net \
+-v $(pwd)/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block \
+-v $(pwd)/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp \
+-w /opt/gopath/src/github.com/hyperledger/fabric hyperledger/fabric-orderer orderer
