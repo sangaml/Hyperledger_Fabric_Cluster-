@@ -43,7 +43,7 @@ docker run -d --rm -it --network="my-net" --name couchdb0 -p 5984:5984 \
 
 sleep 1m
 
-docker run -d--rm -it --link orderer.example.com:orderer.example.com --network="my-net" --name peer0.org1.example.com \
+docker run -d --rm -it --link orderer.example.com:orderer.example.com --network="my-net" --name peer0.org1.example.com \
 -p 8051:7051 -p 8053:7053 -e CORE_LEDGER_STATE_STATEDATABASE=CouchDB \
 -e CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984 -e CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin \
 -e CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=Password@123 -e CORE_PEER_ADDRESSAUTODETECT=true -e CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock \
