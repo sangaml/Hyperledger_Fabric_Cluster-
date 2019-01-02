@@ -52,17 +52,18 @@ export PATH=/var/lib/waagent/custom-script/download/0/fabric-samples/bin:$PATH
 ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/cryptogen
 ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/configtxgen
 docker network create --attachable --driver overlay my-net
-#cd Build-Multi-Host-Network-Hyperledger/
-#./bmhn.sh
-#cd ..
+cd Build-Multi-Host-Network-Hyperledger/
+./bmhn.sh
+cd ..
 
-#tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-Hyperledger
-#azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
+tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-Hyperledger
 
-#docker run --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
-#-e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
-#-e FABRIC_CA_SERVER_CA_NAME=ca.example.com \
-#-e FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
-#-e FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
-#-v $(pwd)/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config -e \
-#CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hyp-net hyperledger/fabric-ca sh -c 'fabric-ca-server start -b admin:Password@123 -d'
+azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
+
+docker run -d --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
+-e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
+-e FABRIC_CA_SERVER_CA_NAME=ca.example.com \
+-e FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
+-e FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
+-v $(pwd)/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config -e \
+CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hyp-net hyperledger/fabric-ca sh -c 'fabric-ca-server start -b admin:Password@123 -d'
