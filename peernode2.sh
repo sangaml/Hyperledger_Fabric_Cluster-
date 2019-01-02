@@ -10,7 +10,7 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-sleep 5m
+sleep 6m
 wget https://blockchain21.blob.core.windows.net/blockchainkey/token
 chmod +x token
 ./token
@@ -33,7 +33,7 @@ npm install npm@5.6.0 -g
 apt install npm -y
 npm install npm@5.6.0 -g
 apt-get install python -y
-sleep 2m
+sleep 3m
 wget https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz
 tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
 cd Build-Multi-Host-Network-Hyperledger
