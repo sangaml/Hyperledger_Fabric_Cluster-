@@ -2,12 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "storageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of storage account"
-      }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -100,6 +94,8 @@
     "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
     "networkSecurityGroupName": "mynsg",
     "secRulesname": "mynsgrule",
+    "secRulesname1": "couchdb1",
+    "secRulesname2": "couchdb2",
     "vmNamePrefix1": "canode",
     "vmNamePrefix2": "orderernode",
     "vmNamePrefix3": "peer1",
@@ -138,6 +134,34 @@
               "priority": 100,
               "direction": "Inbound"
             }
+          },
+          {
+            "name": "ssh_Port",
+            "properties": {
+              "description": "This is the first rule",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "5984",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "ssh_Port",
+            "properties": {
+              "description": "This is the first rule",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "6984",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 120,
+              "direction": "Inbound"
+            }
           }
         ]
       }
@@ -147,7 +171,7 @@
   "name": "[concat(variables('networkSecurityGroupName'), '/', variables('secRulesname'))]",
   "apiVersion": "2018-02-01",
   "location": "[resourceGroup().location]",
-  "comments": "Security rules for Artifactory",
+  "comments": "Security rule",
   "scale": null,
   "dependsOn": [
     "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
@@ -163,6 +187,48 @@
       "direction": "Inbound"
   }
 },
+{
+    "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+    "name": "[concat(variables('networkSecurityGroupName'), '/', variables('secRulesname1'))]",
+    "apiVersion": "2018-02-01",
+    "location": "[resourceGroup().location]",
+    "comments": "Security rule",
+    "scale": null,
+    "dependsOn": [
+      "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+  ],
+    "properties":{
+        "protocol": "*",
+        "sourcePortRange": "*",
+        "destinationPortRange": "5984",
+        "sourceAddressPrefix": "*",
+        "destinationAddressPrefix": "*",
+        "access": "Allow",
+        "priority": 140,
+        "direction": "Inbound"
+    }
+  },
+  {
+    "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+    "name": "[concat(variables('networkSecurityGroupName'), '/', variables('secRulesname2'))]",
+    "apiVersion": "2018-02-01",
+    "location": "[resourceGroup().location]",
+    "comments": "Security rule",
+    "scale": null,
+    "dependsOn": [
+      "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+  ],
+    "properties":{
+        "protocol": "*",
+        "sourcePortRange": "*",
+        "destinationPortRange": "6984",
+        "sourceAddressPrefix": "*",
+        "destinationAddressPrefix": "*",
+        "access": "Allow",
+        "priority": 145,
+        "direction": "Inbound"
+    }
+  },
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/publicIPAddresses",
@@ -309,6 +375,33 @@
                     },
                     "frontendPort": 3003,
                     "backendPort": 22,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false
+                }
+            },
+            {
+                "name": "peer1",
+                "properties": {
+                    "frontendIPConfiguration": {
+                      "id": "[variables('frontEndIPConfigID')]"
+                    },
+                    "frontendPort": 5984,
+                    "backendPort": 5984,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false
+                }
+            },{
+                "name": "peer2",
+                "properties": {
+                    "frontendIPConfiguration": {
+                      "id": "[variables('frontEndIPConfigID')]"
+                    },
+                    "frontendPort": 6984,
+                    "backendPort": 6984,
                     "enableFloatingIP": false,
                     "idleTimeoutInMinutes": 4,
                     "protocol": "Tcp",
