@@ -136,7 +136,7 @@
             }
           },
           {
-            "name": "ssh_Port",
+            "name": "couchdb1",
             "properties": {
               "description": "This is the first rule",
               "protocol": "Tcp",
@@ -150,7 +150,7 @@
             }
           },
           {
-            "name": "ssh_Port",
+            "name": "couchdb2",
             "properties": {
               "description": "This is the first rule",
               "protocol": "Tcp",
