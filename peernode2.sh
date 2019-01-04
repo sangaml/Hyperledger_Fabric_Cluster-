@@ -10,10 +10,10 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-sleep 6m
-wget https://blockchain21.blob.core.windows.net/blockchainkey/token
-chmod +x token
-./token
+#sleep 6m
+#wget https://blockchain21.blob.core.windows.net/blockchainkey/token
+#chmod +x token
+#./token
 
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
@@ -33,10 +33,10 @@ npm install npm@5.6.0 -g
 apt install npm -y
 npm install npm@5.6.0 -g
 apt-get install python -y
-sleep 3m
-wget https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz
-tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
-cd Build-Multi-Host-Network-Hyperledger
+#sleep 3m
+#wget https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz
+#tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
+#cd Build-Multi-Host-Network-Hyperledger
 
 #docker run -d --rm -it --network="my-net" --name couchdb1 -p 6984:5984 \
 #-e COUCHDB_USER= -e COUCHDB_PASSWORD= -e CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=my-net hyperledger/fabric-couchdb 
