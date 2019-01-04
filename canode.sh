@@ -24,7 +24,7 @@ sudo cp ./azure.list /etc/apt/sources.list.d/
 sudo apt-key adv --keyserver packages.microsoft.com --recv-keys EB3E94ADBE1229CF
 sudo apt-get update -y
 sudo apt-get install azcopy -y
-azcopy --source token --destination $dest1 --dest-key $key 
+#azcopy --source token --destination $dest1 --dest-key $key 
 
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
@@ -46,19 +46,19 @@ npm install npm@5.6.0 -g
 apt-get install python -y
 
 ##########Downloading hyperledger fabric repo form git ##############
-git clone https://github.com/sangaml/Build-Multi-Host-Network-Hyperledger.git
-curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.0-rc2
-export PATH=/var/lib/waagent/custom-script/download/0/fabric-samples/bin:$PATH
-ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/cryptogen
-ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/configtxgen
-docker network create --attachable --driver overlay my-net
-cd Build-Multi-Host-Network-Hyperledger/
-./bmhn.sh
-cd ..
+#git clone https://github.com/sangaml/Build-Multi-Host-Network-Hyperledger.git
+#curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.0-rc2
+#export PATH=/var/lib/waagent/custom-script/download/0/fabric-samples/bin:$PATH
+#ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/cryptogen
+#ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/configtxgen
+#docker network create --attachable --driver overlay my-net
+#cd Build-Multi-Host-Network-Hyperledger/
+#./bmhn.sh
+#cd ..
 
-tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-Hyperledger
+#tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-Hyperledger
 
-azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
+#azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
 
 #docker run -d --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
 #-e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
