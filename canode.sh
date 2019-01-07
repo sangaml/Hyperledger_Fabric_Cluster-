@@ -57,7 +57,7 @@ tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-H
 
 azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
 
-docker run -d --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
+#docker run -d --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
 -e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
 -e FABRIC_CA_SERVER_CA_NAME=ca.example.com \
 -e FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
