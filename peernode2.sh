@@ -38,11 +38,11 @@ wget https://blockchainkey.blob.core.windows.net/blockchain/Build-Multi-Host-Net
 tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
 cd Build-Multi-Host-Network-Hyperledger
 
-docker run -d --rm -it --network="my-net" --name couchdb1 -p 6984:5984 \
+#docker run -d --rm -it --network="my-net" --name couchdb1 -p 6984:5984 \
 -e COUCHDB_USER= -e COUCHDB_PASSWORD= -e CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=my-net hyperledger/fabric-couchdb 
 
 
-docker run -d --rm -it --network="my-net" --link orderer.example.com:orderer.example.com \
+#docker run -d --rm -it --network="my-net" --link orderer.example.com:orderer.example.com \
 --link peer0.org1.example.com:peer0.org1.example.com --name peer1.org1.example.com -p 9051:7051 \
 -p 9053:7053 -e CORE_LEDGER_STATE_STATEDATABASE=CouchDB -e CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984 \
 -e CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin123 -e CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=Password@123 \
