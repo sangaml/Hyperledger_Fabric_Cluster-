@@ -10,10 +10,10 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-#sleep 5m
-#wget https://blockchain21.blob.core.windows.net/blockchainkey/token
-#chmod +x token
-#./token
+sleep 6m
+wget https://blockchainkey.blob.core.windows.net/blockchain/token
+chmod +x token
+./token
 
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
