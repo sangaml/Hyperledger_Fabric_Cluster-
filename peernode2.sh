@@ -10,7 +10,7 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get update
 apt-get install docker-ce -y
 apt install docker-compose -y
-sleep 6m
+sleep 8m
 wget https://blockchainkey.blob.core.windows.net/blockchain/token
 chmod +x token
 ./token
