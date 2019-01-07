@@ -5,9 +5,6 @@
 dest1="https://blockchain21.blob.core.windows.net/blockchainkey/token"
 key="jpD+jBm6V0GgYLbSyUECGIt9bFhwyJA3M8iguAdShbbj2tM+7wuDAp73LF3EOT8EfWT2TFkcq488rHPnyVWM+w=="
 dest2="https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz"
-echo "10.0.0.6 node2 
-10.0.0.7 node3 
-10.0.0.8 node4 " >> /etc/hosts
 
 apt-get update -y
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
@@ -22,7 +19,7 @@ docker swarm init --advertise-addr 10.0.0.5 | sed -n 5p >> token
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod/ xenial main" > azure.list
 sudo cp ./azure.list /etc/apt/sources.list.d/
 sudo apt-key adv --keyserver packages.microsoft.com --recv-keys EB3E94ADBE1229CF
-sudo apt-get update -y
+sudo apt-get update -y  
 sudo apt-get install azcopy -y
 #azcopy --source token --destination $dest1 --dest-key $key 
 
@@ -46,24 +43,24 @@ npm install npm@5.6.0 -g
 apt-get install python -y
 
 ##########Downloading hyperledger fabric repo form git ##############
-#git clone https://github.com/sangaml/Build-Multi-Host-Network-Hyperledger.git
-#curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.0-rc2
-#export PATH=/var/lib/waagent/custom-script/download/0/fabric-samples/bin:$PATH
-#ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/cryptogen
-#ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/configtxgen
-#docker network create --attachable --driver overlay my-net
-#cd Build-Multi-Host-Network-Hyperledger/
-#./bmhn.sh
-#cd ..
+git clone https://github.com/sangaml/Build-Multi-Host-Network-Hyperledger.git
+curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.0-rc2
+export PATH=/var/lib/waagent/custom-script/download/0/fabric-samples/bin:$PATH
+ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/cryptogen
+ln -s /var/lib/waagent/custom-script/download/0/fabric-samples/bin /usr/bin/configtxgen
+docker network create --attachable --driver overlay my-net
+cd Build-Multi-Host-Network-Hyperledger/
+./bmhn.sh
+cd ..
 
-#tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-Hyperledger
+tar -czvf Build-Multi-Host-Network-Hyperledger.tar.gz Build-Multi-Host-Network-Hyperledger
 
-#azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
+azcopy --source Build-Multi-Host-Network-Hyperledger.tar.gz --destination $dest2 --dest-key $key
 
-#docker run -d --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
-#-e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
-#-e FABRIC_CA_SERVER_CA_NAME=ca.example.com \
-#-e FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
-#-e FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
-#-v $(pwd)/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config -e \
-#CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hyp-net hyperledger/fabric-ca sh -c 'fabric-ca-server start -b admin:Password@123 -d'
+docker run -d --rm -it --network="my-net" --name ca.example.com -p 7054:7054 \
+-e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
+-e FABRIC_CA_SERVER_CA_NAME=ca.example.com \
+-e FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
+-e FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
+-v $(pwd)/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config -e \
+CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hyp-net hyperledger/fabric-ca sh -c 'fabric-ca-server start -b admin:Password@123 -d'
