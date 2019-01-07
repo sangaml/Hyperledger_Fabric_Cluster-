@@ -40,7 +40,7 @@ cd Build-Multi-Host-Network-Hyperledger
 
 docker run -d --rm -it --network="my-net" --name couchdb1 -p 6984:5984 \
 -e COUCHDB_USER= -e COUCHDB_PASSWORD= -e CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=my-net hyperledger/fabric-couchdb 
-sleep 1m
+
 
 docker run -d --rm -it --network="my-net" --link orderer.example.com:orderer.example.com \
 --link peer0.org1.example.com:peer0.org1.example.com --name peer1.org1.example.com -p 9051:7051 \
@@ -56,8 +56,6 @@ docker run -d --rm -it --network="my-net" --link orderer.example.com:orderer.exa
 -e CORE_PEER_GOSSIP_USELEADERELECTION=false -e CORE_PEER_TLS_ENABLED=false -v /var/run/:/host/var/run/ \
 -v $(pwd)/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp \
 -w /opt/gopath/src/github.com/hyperledger/fabric/peer hyperledger/fabric-peer peer node start 
-
-sleep 1m
 
 docker run -d --rm -it --network="my-net" --name cli --link orderer.example.com:orderer.example.com \
 --link peer0.org1.example.com:peer0.org1.example.com --link peer1.org1.example.com:peer1.org1.example.com \
