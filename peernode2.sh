@@ -57,7 +57,7 @@ cd Build-Multi-Host-Network-Hyperledger
 -v $(pwd)/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp \
 -w /opt/gopath/src/github.com/hyperledger/fabric/peer hyperledger/fabric-peer peer node start 
 
-docker run -d --rm -it --network="my-net" --name cli --link orderer.example.com:orderer.example.com \
+#docker run -d --rm -it --network="my-net" --name cli --link orderer.example.com:orderer.example.com \
 --link peer0.org1.example.com:peer0.org1.example.com --link peer1.org1.example.com:peer1.org1.example.com \
 -p 12051:7051 -p 12053:7053 -e GOPATH=/opt/gopath -e CORE_PEER_LOCALMSPID=Org1MSP \
 -e CORE_PEER_TLS_ENABLED=false -e CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock -e CORE_LOGGING_LEVEL=DEBUG \
