@@ -21,7 +21,7 @@ sudo cp ./azure.list /etc/apt/sources.list.d/
 sudo apt-key adv --keyserver packages.microsoft.com --recv-keys EB3E94ADBE1229CF
 sudo apt-get update -y  
 sudo apt-get install azcopy -y
-#azcopy --source token --destination $dest1 --dest-key $key 
+azcopy --source token --destination $dest1 --dest-key $key 
 
 ##########Install and configure Node
 wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
