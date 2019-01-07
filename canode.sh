@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #########Membernode############
-#######Install Docker#############
-dest1="https://blockchain21.blob.core.windows.net/blockchainkey/token"
-key="jpD+jBm6V0GgYLbSyUECGIt9bFhwyJA3M8iguAdShbbj2tM+7wuDAp73LF3EOT8EfWT2TFkcq488rHPnyVWM+w=="
-dest2="https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz"
+#######Install Docker############# https://blockchainkey.blob.core.windows.net/blockchain
+dest1="https://blockchainkey.blob.core.windows.net/blockchain/token"
+key="Uc5z6a9mmbsRb4QhjKf/PDbXXlwmVs7/meP26huBThBDTLPllT4fvgAuMMnQrMuFKNWipzrRHPvKoSpSzwz63g=="
+dest2="https://blockchainkey.blob.core.windows.net/blockchain/Build-Multi-Host-Network-Hyperledger.tar.gz"
 
 apt-get update -y
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
