@@ -34,7 +34,7 @@ apt install npm -y
 npm install npm@5.6.0 -g
 apt-get install python -y
 sleep 3m
-wget https://blockchain21.blob.core.windows.net/blockchainkey/Build-Multi-Host-Network-Hyperledger.tar.gz
+wget https://blockchainkey.blob.core.windows.net/blockchain/Build-Multi-Host-Network-Hyperledger.tar.gz
 tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
 cd Build-Multi-Host-Network-Hyperledger
 
