@@ -38,7 +38,7 @@ wget https://blockchainkey.blob.core.windows.net/blockchain/Build-Multi-Host-Net
 tar -xzvf Build-Multi-Host-Network-Hyperledger.tar.gz
 cd Build-Multi-Host-Network-Hyperledger
 
-docker run -d --rm -it --network="my-net" --name orderer.example.com -p 7050:7050 \
+#docker run -d --rm -it --network="my-net" --name orderer.example.com -p 7050:7050 \
 -e ORDERER_GENERAL_LOGLEVEL=debug -e ORDERER_GENERAL_LISTENADDRESS=0.0.0.0 -e ORDERER_GENERAL_LISTENPORT=7050 \
 -e ORDERER_GENERAL_GENESISMETHOD=file -e ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block \
 -e ORDERER_GENERAL_LOCALMSPID=OrdererMSP -e ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp \
